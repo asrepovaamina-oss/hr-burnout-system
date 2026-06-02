@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛡 HR Burnout System
 
-## Getting Started
+HR система мониторинга выгорания сотрудников на основе ИИ.
 
-First, run the development server:
+## Что делает система
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Автоматически рассылает пульс-опросы каждый понедельник через Telegram
+- Анализирует тональность ответов через Groq AI
+- Отправляет алерты HR при негативных ответах
+- Генерирует еженедельные отчёты каждую пятницу
+- Показывает статистику сотруднику после каждого ответа
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Стек технологий
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **N8N** — автоматизация воркфлоу
+- **Supabase** — база данных
+- **Groq AI** — анализ тональности и генерация отчётов
+- **Cohere** — эмбеддинги для RAG
+- **Next.js** — HR дашборд
+- **Telegram Bot** — опросы и уведомления
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Структура проекта
 
-## Learn More
+- app/ — Next.js HR дашборд
+- lib/ — Supabase клиент
+- workflows/ — N8N воркфлоу (JSON)
 
-To learn more about Next.js, take a look at the following resources:
+## Воркфлоу
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Рассылка опросов** — каждый понедельник всем активным сотрудникам
+2. **Приём ответов** — анализ тональности + статистика сотруднику
+3. **Еженедельный отчёт** — каждую пятницу HR получает сводку
+4. **Перехватчик ошибок** — логирование всех ошибок
+5. **Загрузка базы знаний** — RAG для рекомендаций HR
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## База данных (Supabase)
 
-## Deploy on Vercel
+- employees — сотрудники
+- survey_responses — ответы на опросы
+- survey_logs — логи рассылки
+- weekly_reports — еженедельные отчёты
+- knowledge_base — база знаний для RAG
+- error_logs — логи ошибок
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Установка
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Клонируй репозиторий
+2. Установи зависимости: npm install
+3. Создай .env.local с ключами Supabase
+4. Запусти: npm run dev
+5. Импортируй воркфлоу из папки workflows/ в N8N
